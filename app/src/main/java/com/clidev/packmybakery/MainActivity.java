@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
                     Timber.d("medium (5) package is: " + blueberryPackage.get(1));
                     Timber.d("large (8) package is: " + blueberryPackage.get(2));
 
+                } else {
+                    Timber.d("Optimal package method not found");
                 }
 
             }
