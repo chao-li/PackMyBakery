@@ -11,6 +11,103 @@ import timber.log.Timber;
 
 public final class PackageLooper {
 
+    public static List<Integer> calculateVegemite(int number) {
+        Integer mediumPackSize = 5;
+        Integer smallPackSize = 3;
+
+        Double smallPrice = 6.99;
+        Double mediumPrice = 8.99;
+
+        List<Integer> smallPackNo = new ArrayList<>();
+        List<Integer> mediumPackNo = new ArrayList<>();
+        List<Integer> totalPackNo = new ArrayList<>();
+
+        compileAllPossibleCombinationsVegemite(number, mediumPackSize, smallPackSize,
+                smallPackNo, mediumPackNo, totalPackNo);
+
+        List<Integer> finalPackage = new ArrayList<>();
+
+        findMinimumPackageCombinationVegemite(smallPrice, mediumPrice, smallPackNo, mediumPackNo, totalPackNo, finalPackage);
+
+        return finalPackage;
+
+
+    }
+
+    private static void compileAllPossibleCombinationsVegemite(int number, int mediumPackSize, int smallPackSize, List<Integer> smallPackNo, List<Integer> mediumPackNo, List<Integer> totalPackNo) {
+        int xlim = number/smallPackSize;
+        int ylim = number/mediumPackSize;
+
+        for (int x = 0; x <= xlim; x++) {
+            for (int y = 0; y <= ylim; y++) {
+
+                int totalProduct = smallPackSize*x + mediumPackSize*y;
+
+                if (totalProduct == number) {
+                    smallPackNo.add(x);
+                    mediumPackNo.add(y);
+
+                    totalPackNo.add(x + y);
+                }
+
+            }
+        }
+    }
+
+    private static void findMinimumPackageCombinationVegemite(Double smallPrice, Double mediumPrice, List<Integer> smallPackNo, List<Integer> mediumPackNo, List<Integer> totalPackNo, List<Integer> finalPackage) {
+        if (totalPackNo.size() >= 1) {
+            // find the value for the minimum number of totalPackNo.
+            Integer minPackNo = Collections.min(totalPackNo);
+            Integer minPackFreq = Collections.frequency(totalPackNo, minPackNo);
+
+            // find how many time this number is achieved, if more than one, find the cheapest option
+            Integer minIndex = totalPackNo.indexOf(Collections.min(totalPackNo));
+
+            if (minPackFreq > 1) {
+                Timber.d("MORE THAN 1 MINIMUM PACKAGE METHOD DETECTED.");
+                // compare price and get the cheapest solution
+                // get all occurrence of the index
+                ArrayList<Integer> indexList = new ArrayList<>();
+                for (int i = 0; i < totalPackNo.size(); i++) {
+                    if (minPackNo == totalPackNo.get(i)) {
+                        indexList.add(i);
+                    }
+                }
+
+                // loop thru each combination and calculate the price
+                Map<Double, Integer> priceIndexMap = new HashMap<>();
+                for (int index : indexList) {
+                    int smallNo = smallPackNo.get(index);
+                    int mediumNo = mediumPackNo.get(index);
+
+                    Double price = smallNo * smallPrice + mediumNo * mediumPrice;
+
+                    priceIndexMap.put(price, index);
+
+                    Timber.d("Price: " + price);
+                }
+
+                // find the index that corresponds to the lowest price
+                Set<Double> priceSet = priceIndexMap.keySet();
+                Double minPrice = Collections.min(priceSet);
+                minIndex = priceIndexMap.get(minPrice);
+
+            }
+
+            finalPackage.add(smallPackNo.get(minIndex));
+            finalPackage.add(mediumPackNo.get(minIndex));
+        }
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////////
+    // BLUEBERRY MUFFIN AND CROISSANT CALCULATIONS BELOW
+    //////////////////////////////////////////////////////////////
+
+
+
     public static List<Integer> calculateBlueberry(int number) {
         Integer largePackSize = 8;
         Integer mediumPackSize = 5;

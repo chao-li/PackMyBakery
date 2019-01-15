@@ -64,8 +64,21 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-
+                List<Integer> vegemitePackage = PackageLooper.calculateVegemite(mVegemiteNumber);
                 List<Integer> blueberryPackage = PackageLooper.calculateBlueberry(mBlueberryNumber);
+                List<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
+
+                if (vegemitePackage.size() >= 1) {
+                    Timber.d("///////////////////VEGEMITE //////////////////");
+                    Timber.d("small (3) package is: " + vegemitePackage.get(0));
+                    Timber.d("medium (5) package is: " + vegemitePackage.get(1));
+
+
+                } else {
+                    Timber.d("///////////////////BLUEBERRY //////////////////");
+                    Timber.d("Optimal blueberry package method not found");
+                }
+
 
 
                 if (blueberryPackage.size() >= 1) {
@@ -81,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                List<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
+
 
 
                 if (croissantPackage.size() >= 1) {
