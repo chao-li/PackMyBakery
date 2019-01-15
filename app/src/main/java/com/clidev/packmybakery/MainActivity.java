@@ -1,13 +1,18 @@
 package com.clidev.packmybakery;
 
+import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
                 mBlueberryNumber = Integer.parseInt(mBlueberryMuffinEt.getText().toString());
                 mCroissantNumber = Integer.parseInt(mCroissantEt.getText().toString());
 
+                List<Integer> blueberryPackage = PackageCalculator.calculateBlueberry(mBlueberryNumber);
 
-
+                Timber.d("small package is: " + blueberryPackage.get(0));
+                Timber.d("medium package is: " + blueberryPackage.get(1));
+                Timber.d("large package is: " + blueberryPackage.get(2));
 
 
             }
