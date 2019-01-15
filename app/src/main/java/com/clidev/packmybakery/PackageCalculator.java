@@ -13,6 +13,8 @@ import timber.log.Timber;
 
 public final class PackageCalculator {
 
+
+
     public static List<Integer> calculateBlueberry(int number) {
         int largePackSize = 8;
         int mediumPackSize = 5;

@@ -63,10 +63,9 @@ public class MainActivity extends AppCompatActivity {
                     mCroissantNumber = 0;
                 }
 
-                Timber.d("Croissant ordered: " + mCroissantNumber);
 
-                /*
-                List<Integer> blueberryPackage = PackageCalculator.calculateBlueberry(mBlueberryNumber);
+
+                List<Integer> blueberryPackage = PackageLooper.calculateBlueberry(mBlueberryNumber);
 
 
                 if (blueberryPackage.size() >= 1) {
@@ -80,8 +79,9 @@ public class MainActivity extends AppCompatActivity {
                     Timber.d("Optimal blueberry package method not found");
                 }
 
-                */
-                List<Integer> croissantPackage = PackageCalculator.calculateCroissant(mCroissantNumber);
+
+
+                List<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
 
 
                 if (croissantPackage.size() >= 1) {
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     Timber.d("///////////////////CROISSANT //////////////////");
                     Timber.d("Optimal croissant package method not found");
                 }
+
 
             }
         });
