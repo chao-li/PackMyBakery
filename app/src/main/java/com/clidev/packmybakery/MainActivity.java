@@ -65,10 +65,12 @@ public class MainActivity extends AppCompatActivity {
 
                 List<Integer> blueberryPackage = PackageCalculator.calculateBlueberry(mBlueberryNumber);
 
-                Timber.d("small (2) package is: " + blueberryPackage.get(0));
-                Timber.d("medium (5) package is: " + blueberryPackage.get(1));
-                Timber.d("large (8) package is: " + blueberryPackage.get(2));
+                if (blueberryPackage.size() > 1) {
+                    Timber.d("small (2) package is: " + blueberryPackage.get(0));
+                    Timber.d("medium (5) package is: " + blueberryPackage.get(1));
+                    Timber.d("large (8) package is: " + blueberryPackage.get(2));
 
+                }
 
             }
         });

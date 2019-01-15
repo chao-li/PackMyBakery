@@ -2,7 +2,10 @@ package com.clidev.packmybakery;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import timber.log.Timber;
 
@@ -178,33 +181,52 @@ public final class PackageCalculator {
 
 
         // Try compare all options, and find the option with the smallest number of packages.
-        if (totalPack.isEmpty() != false) {
-            int minIndex = totalPack.indexOf(Collections.min(totalPack));
-            int minValue = totalPack.get(minIndex);
-            int minValueFreq = Collections.frequency(totalPack, minValue);
 
-            Timber.d("minValueFreq: " + minValueFreq);
+        Integer minIndex = totalPack.indexOf(Collections.min(totalPack));
+        int minValue = totalPack.get(minIndex);
+        int minValueFreq = Collections.frequency(totalPack, minValue);
 
-            if (minValueFreq > 1) {
-                // compare price and get the cheapest solution
-                // get all occurence of the index
-                ArrayList<Integer> indexList = new ArrayList<>();
-                for (int i = 0; i < totalPack.size(); i++) {
-                    if(minValue == totalPack.get(i)) {
-                        indexList.add(i);
-                    }
+        Timber.d("minValueFreq: " + minValueFreq);
+
+        if (minValueFreq > 1) {
+            Timber.d("MORE THAN 1 MINIMUM PACKAGE METHOD DETECTED.");
+            // compare price and get the cheapest solution
+            // get all occurrence of the index
+            ArrayList<Integer> indexList = new ArrayList<>();
+            for (int i = 0; i < totalPack.size(); i++) {
+                if(minValue == totalPack.get(i)) {
+                    indexList.add(i);
                 }
-
-                // loop thru each combination and calculate the price
-
             }
 
-            List<Integer> finalPackage = new ArrayList<>();
-            finalPackage.add(smallList.get(minIndex));
-            finalPackage.add(mediumList.get(minIndex));
-            finalPackage.add(largeList.get(minIndex));
-        } else {
-            return new ArrayList<>();
+            // loop thru each combination and calculate the price
+            Map<Double, Integer> priceIndexMap = new HashMap<>();
+            for (int index : indexList) {
+                int smallNo = smallList.get(index);
+                int mediumNo = mediumList.get(index);
+                int largeNo = largeList.get(index);
+
+                double price = smallNo * 9.95 + mediumNo * 16.95 + largeNo * 24.95;
+
+                priceIndexMap.put(price, index);
+
+                Timber.d("Price: "+ price);
+            }
+
+            // find the index that corresponds to the lowest price
+            Set<Double> priceSet = priceIndexMap.keySet();
+            Double minPrice = Collections.min(priceSet);
+            minIndex = priceIndexMap.get(minPrice);
+
         }
+
+        List<Integer> finalPackage = new ArrayList<>();
+        finalPackage.add(smallList.get(minIndex));
+        finalPackage.add(mediumList.get(minIndex));
+        finalPackage.add(largeList.get(minIndex));
+
+        return finalPackage;
+
+
     }
 }
