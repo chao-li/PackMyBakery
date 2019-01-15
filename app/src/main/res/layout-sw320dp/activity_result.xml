@@ -23,22 +23,23 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/vegemite_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
+                android:text="TextView"
+                android:textColor="@android:color/background_dark"
                 android:textSize="24sp"
-                tools:text="3 X Vegemite Scroll: $50.20 \n 20 X 2pack $9.95 \n $50.20 \n 20 X 2pack $9.95 \n $50.20 \n 20 X 2pack $9.95 \n" />
+                tools:text="3 X Vegemite Scroll: $50.20 \n 20 X 2pack $9.95 \n 20 X 2pack $9.95 \n 20 X 2pack $9.95 \n" />
+            />
 
             <TextView
                 android:id="@+id/blueberry_tv"
@@ -46,8 +47,9 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="TextView"
+                android:textColor="@android:color/background_dark"
                 android:textSize="24sp"
-                tools:text="3 X Vegemite Scroll: $50.20 \n 20 X 2pack $9.95 \n $50.20 \n 20 X 2pack $9.95 \n $50.20 \n 20 X 2pack $9.95 \n" />
+                tools:text="3 X Vegemite Scroll: $50.20 \n 20 X 2pack $9.95 \n 20 X 2pack $9.95 \n 20 X 2pack $9.95 \n" />
             />
 
             <TextView
@@ -56,8 +58,9 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="TextView"
+                android:textColor="@android:color/background_dark"
                 android:textSize="24sp"
-                tools:text="3 X Vegemite Scroll: $50.20 \n 20 X 2pack $9.95 \n $50.20 \n 20 X 2pack $9.95 \n $50.20 \n 20 X 2pack $9.95 \n" />
+                tools:text="3 X Vegemite Scroll: $50.20 \n 20 X 2pack $9.95 \n 20 X 2pack $9.95 \n 20 X 2pack $9.95 \n" />
             />
         </LinearLayout>
     </ScrollView>
