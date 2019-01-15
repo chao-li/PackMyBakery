@@ -63,15 +63,36 @@ public class MainActivity extends AppCompatActivity {
                     mCroissantNumber = 0;
                 }
 
+                Timber.d("Croissant ordered: " + mCroissantNumber);
+
+                /*
                 List<Integer> blueberryPackage = PackageCalculator.calculateBlueberry(mBlueberryNumber);
 
-                if (blueberryPackage.size() > 1) {
+
+                if (blueberryPackage.size() >= 1) {
+                    Timber.d("///////////////////BLUEBERRY //////////////////");
                     Timber.d("small (2) package is: " + blueberryPackage.get(0));
                     Timber.d("medium (5) package is: " + blueberryPackage.get(1));
                     Timber.d("large (8) package is: " + blueberryPackage.get(2));
 
                 } else {
-                    Timber.d("Optimal package method not found");
+                    Timber.d("///////////////////BLUEBERRY //////////////////");
+                    Timber.d("Optimal blueberry package method not found");
+                }
+
+                */
+                List<Integer> croissantPackage = PackageCalculator.calculateCroissant(mCroissantNumber);
+
+
+                if (croissantPackage.size() >= 1) {
+                    Timber.d("///////////////////CROISSANT //////////////////");
+                    Timber.d("small (3) package is: " + croissantPackage.get(0));
+                    Timber.d("medium (5) package is: " + croissantPackage.get(1));
+                    Timber.d("large (9) package is: " + croissantPackage.get(2));
+
+                } else {
+                    Timber.d("///////////////////CROISSANT //////////////////");
+                    Timber.d("Optimal croissant package method not found");
                 }
 
             }

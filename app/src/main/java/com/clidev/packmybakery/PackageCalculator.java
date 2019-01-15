@@ -33,6 +33,36 @@ public final class PackageCalculator {
 
     }
 
+    public static List<Integer> calculateCroissant(int number) {
+        int largePackSize = 9;
+        int mediumPackSize = 5;
+        int smallPackSize = 3;
+
+        Double smallPrice = 5.95;
+        Double mediumPrice = 9.95;
+        Double largePrice = 16.99;
+
+        Timber.d("Croissant no. debug 1: " + number);
+
+        List<Integer> croissant = calculatePackage(number,
+                largePackSize,
+                mediumPackSize,
+                smallPackSize,
+                smallPrice,
+                mediumPrice,
+                largePrice);
+
+        return calculatePackage(number,
+                largePackSize,
+                mediumPackSize,
+                smallPackSize,
+                smallPrice,
+                mediumPrice,
+                largePrice);
+
+
+    }
+
     public static List<Integer> calculatePackage(int number,
                                                  int largePackSize,
                                                  int mediumPackSize,
@@ -41,7 +71,7 @@ public final class PackageCalculator {
                                                  Double mediumPrice,
                                                  Double largePrice) {
 
-        // package of 2, 5, 8
+        Timber.d("Package entered: " + number);
 
         // initializing the collection of packing option
         List<Integer> totalPack = new ArrayList<>();
@@ -100,6 +130,7 @@ public final class PackageCalculator {
         /////////////////////////////////////////////////////////////
         // Try pack starting with the large size ////////////////////
         /////////////////////////////////////////////////////////////
+        Timber.d("Package No. Entered: " + number);
         int smallPack = 0;
         int mediumPack = 0;
         int largePack = 0;
@@ -193,7 +224,7 @@ public final class PackageCalculator {
         int smallPack;
         int mediumPack;
         int largePack;
-        int remainderFrom2;
+        int remainderFromSmall;
         Map<String, Integer> sizeToNumberMap;//Try pack starting with medium sized package
         /////////////////////////////////////////////////////////
         smallPack = 0;
@@ -201,19 +232,19 @@ public final class PackageCalculator {
         largePack = 0;
 
 
-        int remainderFrom5 = number%mediumPackSize;
+        int remainderFromMedium = number%mediumPackSize;
 
-        if (remainderFrom5 == 0) {
+        if (remainderFromMedium == 0) {
             // pack using medium size only
             mediumPack = number/5;
         } else {
             // if not divisible by 5, try package remainder with smaller package
 
-            remainderFrom2 = remainderFrom5 % smallPackSize;
+            remainderFromSmall = remainderFromMedium % smallPackSize;
 
-            if (remainderFrom2 == 0) {
+            if (remainderFromSmall == 0) {
                 // package everything with medium and small package
-                smallPack = remainderFrom5/smallPackSize;
+                smallPack = remainderFromMedium/smallPackSize;
                 mediumPack = number/mediumPackSize;
                 largePack = 0;
 
@@ -292,7 +323,7 @@ public final class PackageCalculator {
         // Try compare all options, and find the option with the smallest number of packages.
         List<Integer> finalPackage = new ArrayList<>();
 
-        if (totalPack.size() > 1) {
+        if (totalPack.size() >= 1) {
             Integer minIndex = totalPack.indexOf(Collections.min(totalPack));
             int minValue = totalPack.get(minIndex);
             int minValueFreq = Collections.frequency(totalPack, minValue);
