@@ -26,6 +26,7 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        getSupportActionBar().setTitle("Pack My Bakery");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
@@ -65,7 +66,7 @@ public class ResultActivity extends AppCompatActivity {
 
             mVegemiteTv.setText(line0 + line1 + line2);
         } else {
-            mVegemiteTv.setText("Cannot pack this exact number, try a different combination.");
+            mVegemiteTv.setText("Cannot pack vegemite scrolls to this exact number, try a different amount.");
         }
     }
 
@@ -84,7 +85,7 @@ public class ResultActivity extends AppCompatActivity {
 
             mBlueberryTv.setText(line0 + line1 + line2 + line3);
         } else {
-            mBlueberryTv.setText("Cannot pack this exact number, try a different combination.");
+            mBlueberryTv.setText("Cannot pack blueberry muffins to this exact number, try a different amount.");
         }
     }
 
@@ -103,7 +104,7 @@ public class ResultActivity extends AppCompatActivity {
 
             mCroissantTv.setText(line0 + line1 + line2 + line3);
         } else {
-            mCroissantTv.setText("Cannot pack this exact number, try a different combination.");
+            mCroissantTv.setText("Cannot pack croissant to this exact number, try a different amount.");
         }
     }
 }
