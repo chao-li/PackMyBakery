@@ -11,7 +11,7 @@ import timber.log.Timber;
 
 public final class PackageLooper {
 
-    public static List<Integer> calculateVegemite(int number) {
+    public static ArrayList<Integer> calculateVegemite(int number) {
         Integer mediumPackSize = 5;
         Integer smallPackSize = 3;
 
@@ -25,7 +25,7 @@ public final class PackageLooper {
         compileAllPossibleCombinationsVegemite(number, mediumPackSize, smallPackSize,
                 smallPackNo, mediumPackNo, totalPackNo);
 
-        List<Integer> finalPackage = new ArrayList<>();
+        ArrayList<Integer> finalPackage = new ArrayList<>();
 
         findMinimumPackageCombinationVegemite(smallPrice, mediumPrice, smallPackNo, mediumPackNo, totalPackNo, finalPackage);
 
@@ -43,7 +43,7 @@ public final class PackageLooper {
 
                 int totalProduct = smallPackSize*x + mediumPackSize*y;
 
-                if (totalProduct == number) {
+                if (totalProduct == number && totalProduct != 0) {
                     smallPackNo.add(x);
                     mediumPackNo.add(y);
 
@@ -108,7 +108,7 @@ public final class PackageLooper {
 
 
 
-    public static List<Integer> calculateBlueberry(int number) {
+    public static ArrayList<Integer> calculateBlueberry(int number) {
         Integer largePackSize = 8;
         Integer mediumPackSize = 5;
         Integer smallPackSize = 2;
@@ -121,7 +121,7 @@ public final class PackageLooper {
                 smallPrice, mediumPrice, largePrice);
     }
 
-    public static List<Integer> calculateCroissant(int number) {
+    public static ArrayList<Integer> calculateCroissant(int number) {
         Integer largePackSize = 9;
         Integer mediumPackSize = 5;
         Integer smallPackSize = 3;
@@ -134,7 +134,7 @@ public final class PackageLooper {
                 smallPrice, mediumPrice, largePrice);
     }
 
-    private static List<Integer> calculateCombinations(int number,
+    private static ArrayList<Integer> calculateCombinations(int number,
                                                       Integer largePackSize,
                                                       Integer mediumPackSize,
                                                       Integer smallPackSize,
@@ -149,7 +149,7 @@ public final class PackageLooper {
 
         compileAllPossibleCombinations(number, largePackSize, mediumPackSize, smallPackSize, smallPackNo, mediumPackNo, largePackNo, totalPackNo);
 
-        List<Integer> finalPackage = new ArrayList<>();
+        ArrayList<Integer> finalPackage = new ArrayList<>();
 
         findMinimumPackageCombination(smallPrice, mediumPrice, largePrice, smallPackNo, mediumPackNo, largePackNo, totalPackNo, finalPackage);
 
@@ -166,7 +166,7 @@ public final class PackageLooper {
                 for (int z = 0; z <= zlim; z++) {
                     int totalProduct = smallPackSize*x + mediumPackSize*y + largePackSize*z;
 
-                    if (totalProduct == number) {
+                    if (totalProduct == number && totalProduct != 0) {
                         smallPackNo.add(x);
                         mediumPackNo.add(y);
                         largePackNo.add(z);

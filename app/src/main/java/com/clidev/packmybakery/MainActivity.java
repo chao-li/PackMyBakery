@@ -1,5 +1,6 @@
 package com.clidev.packmybakery;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,11 +64,19 @@ public class MainActivity extends AppCompatActivity {
                     mCroissantNumber = 0;
                 }
 
+                // Calculate the optimal combinations
+                ArrayList<Integer> vegemitePackage = PackageLooper.calculateVegemite(mVegemiteNumber);
+                ArrayList<Integer> blueberryPackage = PackageLooper.calculateBlueberry(mBlueberryNumber);
+                ArrayList<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
 
-                List<Integer> vegemitePackage = PackageLooper.calculateVegemite(mVegemiteNumber);
-                List<Integer> blueberryPackage = PackageLooper.calculateBlueberry(mBlueberryNumber);
-                List<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                intent.putIntegerArrayListExtra("VEGEMITE", vegemitePackage);
+                intent.putIntegerArrayListExtra("BLUEBERRY", blueberryPackage);
+                intent.putIntegerArrayListExtra("CROISSANT", croissantPackage);
+                startActivity(intent);
 
+
+                /*
                 if (vegemitePackage.size() >= 1) {
                     Timber.d("///////////////////VEGEMITE //////////////////");
                     Timber.d("small (3) package is: " + vegemitePackage.get(0));
@@ -93,10 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-
-
-
-
                 if (croissantPackage.size() >= 1) {
                     Timber.d("///////////////////CROISSANT //////////////////");
                     Timber.d("small (3) package is: " + croissantPackage.get(0));
@@ -107,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     Timber.d("///////////////////CROISSANT //////////////////");
                     Timber.d("Optimal croissant package method not found");
                 }
+                */
 
 
             }

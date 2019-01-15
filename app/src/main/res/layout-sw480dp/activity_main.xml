@@ -23,10 +23,10 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/vegemite_scroll_cv"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="225dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="75dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         app:cardCornerRadius="10dp"
@@ -48,15 +48,14 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/blueberry_muffin_cv"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="225dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="75dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/vegemite_scroll_cv"
         app:layout_constraintTop_toBottomOf="@+id/vegemite_scroll_cv">
 
         <ImageView
@@ -70,15 +69,14 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/croissant_cv"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="225dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="75dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/blueberry_muffin_cv"
         app:layout_constraintTop_toBottomOf="@+id/blueberry_muffin_cv">
 
         <ImageView
@@ -92,9 +90,9 @@
 
     <EditText
         android:id="@+id/vegemite_scroll_et"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="50dp"
         android:background="@color/cardview_light_background"
         android:ems="10"
         android:hint="No."
@@ -105,28 +103,27 @@
 
     <EditText
         android:id="@+id/blueberry_muffin_et"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
         android:background="@color/cardview_light_background"
         android:ems="10"
         android:hint="No."
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/blueberry_muffin_cv"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/vegemite_scroll_et"
         app:layout_constraintTop_toTopOf="@+id/blueberry_muffin_cv" />
 
     <EditText
         android:id="@+id/croissant_et"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/cardview_light_background"
         android:ems="10"
         android:hint="No."
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/croissant_cv"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/blueberry_muffin_et"
         app:layout_constraintTop_toTopOf="@+id/croissant_cv" />
 
     <Button
