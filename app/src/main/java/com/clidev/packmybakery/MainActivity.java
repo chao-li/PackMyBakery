@@ -45,15 +45,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Obtain the number of each order
-                mVegemiteNumber = Integer.parseInt(mVegemiteScrollEt.getText().toString());
-                mBlueberryNumber = Integer.parseInt(mBlueberryMuffinEt.getText().toString());
-                mCroissantNumber = Integer.parseInt(mCroissantEt.getText().toString());
+                try {
+                    mVegemiteNumber = Integer.parseInt(mVegemiteScrollEt.getText().toString());
+                } catch (Exception e) {
+                    mVegemiteNumber = 0;
+                }
+
+                try {
+                    mBlueberryNumber = Integer.parseInt(mBlueberryMuffinEt.getText().toString());
+                } catch (Exception e) {
+                    mBlueberryNumber = 0;
+                }
+
+                try {
+                    mCroissantNumber = Integer.parseInt(mCroissantEt.getText().toString());
+                } catch (Exception e) {
+                    mCroissantNumber = 0;
+                }
 
                 List<Integer> blueberryPackage = PackageCalculator.calculateBlueberry(mBlueberryNumber);
 
-                Timber.d("small package is: " + blueberryPackage.get(0));
-                Timber.d("medium package is: " + blueberryPackage.get(1));
-                Timber.d("large package is: " + blueberryPackage.get(2));
+                Timber.d("small (2) package is: " + blueberryPackage.get(0));
+                Timber.d("medium (5) package is: " + blueberryPackage.get(1));
+                Timber.d("large (8) package is: " + blueberryPackage.get(2));
 
 
             }
