@@ -115,9 +115,9 @@ public class ResultActivity extends AppCompatActivity {
             Double price = small * 5.95 + medium * 9.95 + large * 16.99;
 
             String line0 = total + " X Croissant: $" + String.format ("%.2f", price) + "\n";
-            String line1 = small + " X 3pack $9.95\n";
-            String line2 = medium + " X 5pack $16.95\n";
-            String line3 = large + " X 9pack $24.95\n";
+            String line1 = small + " X 3pack $5.95\n";
+            String line2 = medium + " X 5pack $9.95\n";
+            String line3 = large + " X 9pack $16.99\n";
 
             // set the strings into the text view.
             mCroissantTv.setText(line0 + line1 + line2 + line3);
