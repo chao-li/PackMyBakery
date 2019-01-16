@@ -147,4 +147,46 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Vegemite Scrolls"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/vegemite_scroll_et"
+        app:layout_constraintEnd_toEndOf="@+id/vegemite_scroll_et"
+        app:layout_constraintStart_toStartOf="@+id/vegemite_scroll_et" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Blueberry Muffins"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/blueberry_muffin_et"
+        app:layout_constraintEnd_toEndOf="@+id/blueberry_muffin_et"
+        app:layout_constraintStart_toStartOf="@+id/blueberry_muffin_et" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Croissant"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/croissant_et"
+        app:layout_constraintEnd_toEndOf="@+id/croissant_et"
+        app:layout_constraintStart_toStartOf="@+id/croissant_et" />
+
 </android.support.constraint.ConstraintLayout>
