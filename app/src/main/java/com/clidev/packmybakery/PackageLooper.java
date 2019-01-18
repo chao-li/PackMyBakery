@@ -16,31 +16,69 @@ public final class PackageLooper {
     //////////////////////////////////////////////////////////////
     public static ArrayList<Integer> calculateVegemite(int number) {
         // set the pack size
-        Integer mediumPackSize = 5;
-        Integer smallPackSize = 3;
+        int mediumPackSize = 5;
+        int smallPackSize = 3;
 
         // set the pricing
+        /*
         Double smallPrice = 6.99;
         Double mediumPrice = 8.99;
+        */
 
         // create empty lists to house the collection of possible pack numbers.
+        /*
         List<Integer> smallPackNo = new ArrayList<>();
         List<Integer> mediumPackNo = new ArrayList<>();
         List<Integer> totalPackNo = new ArrayList<>();
+        */
 
         // run the function to fill the collection of combinations
-        compileAllPossibleCombinationsVegemite(number, mediumPackSize, smallPackSize,
-                smallPackNo, mediumPackNo, totalPackNo);
+        ArrayList<Integer> combResult = compileAllPossibleCombinationsBestOptimizedVegemite(number, smallPackSize, mediumPackSize);
 
-
+        /*
         ArrayList<Integer> finalPackage = new ArrayList<>();
 
         // run the function to find the combination with the least number of packaging, and at the same time, ensuring the lowest cost.
         findMinimumPackageCombinationVegemite(smallPrice, mediumPrice, smallPackNo, mediumPackNo, totalPackNo, finalPackage);
 
         return finalPackage;
+        */
+        return combResult;
 
 
+    }
+
+    private static ArrayList<Integer> compileAllPossibleCombinationsBestOptimizedVegemite(int number, int smallPackSize, int mediumPackSize) {
+
+        int ylim = number / mediumPackSize;
+        boolean conditionMet = false;
+        ArrayList<Integer> combResult = new ArrayList<>();
+
+
+        for (int y = ylim; y >= 0; y--) {
+
+            int xlim = number - (y * mediumPackSize);
+
+            for (int x = xlim; x >= 0; x--) {
+
+                int totalProduct = smallPackSize * x + mediumPackSize * y;
+
+                // if total product number equals what we requested, save this combination.
+                if (totalProduct == number && totalProduct != 0) {
+                    combResult.add(x);
+                    combResult.add(y);
+
+                    conditionMet = true;
+                    break;
+                }
+
+            }
+            if (conditionMet) {
+                break;
+            }
+        }
+
+        return combResult;
     }
 
     // this function finds all the possible combinations to obtain the number of products requested.
@@ -68,6 +106,7 @@ public final class PackageLooper {
         }
     }
 
+    /*
     // this function finds the combination with the lowest number of package and price
     private static void findMinimumPackageCombinationVegemite(Double smallPrice, Double mediumPrice, List<Integer> smallPackNo, List<Integer> mediumPackNo, List<Integer> totalPackNo, List<Integer> finalPackage) {
         // if the totalPackNo isn't empty.
@@ -116,7 +155,7 @@ public final class PackageLooper {
             finalPackage.add(mediumPackNo.get(minIndex));
         }
     }
-
+    */
 
     //////////////////////////////////////////////////////////////
     // BLUEBERRY MUFFIN AND CROISSANT CALCULATIONS BELOW
@@ -195,8 +234,8 @@ public final class PackageLooper {
 
     // function for finding all possible combination to get the number of products requested.
     private static ArrayList<Integer> compileAllPossibleCombinationsBestOptimized(int number, int smallPackSize, int mediumPackSize, int largePackSize) {
-        //int xlim = number/smallPackSize;
-        //int ylim = number/mediumPackSize;
+
+
         int zlim = number / largePackSize;
         boolean conditionMet = false;
         ArrayList<Integer> combResult = new ArrayList<>();
