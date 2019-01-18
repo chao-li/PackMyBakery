@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
 
 
+
             // package these results together so that they may all be returned to the main thread.
             ArrayList<ArrayList<Integer>> allPackage = new ArrayList<>();
             allPackage.add(vegemitePackage);
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<ArrayList<Integer>> arrayLists) {
             // back on the main thread, turn off the loading icon.
             mProgressBar.setVisibility(View.INVISIBLE);
+
 
             // unpack the results that just got passed in.
             ArrayList<Integer> vegemitePackage = arrayLists.get(0);
@@ -131,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
             // navigate to the results screen
             startActivity(intent);
+
         }
     }
 }

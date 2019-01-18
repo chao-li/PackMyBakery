@@ -46,15 +46,15 @@ public final class PackageLooper {
     // this function finds all the possible combinations to obtain the number of products requested.
     private static void compileAllPossibleCombinationsVegemite(int number, int mediumPackSize, int smallPackSize, List<Integer> smallPackNo, List<Integer> mediumPackNo, List<Integer> totalPackNo) {
         // define the limit for the x and y. x is the number of small package, and y is the number of large package.
-        int xlim = number/smallPackSize;
-        int ylim = number/mediumPackSize;
+        int xlim = number / smallPackSize;
+        int ylim = number / mediumPackSize;
 
         // for each possible combinations.
         for (int x = 0; x <= xlim; x++) {
             for (int y = 0; y <= ylim; y++) {
 
                 // calculate total number of product.
-                int totalProduct = smallPackSize*x + mediumPackSize*y;
+                int totalProduct = smallPackSize * x + mediumPackSize * y;
 
                 // if the number of product matches the number of product requested, save this combination in the lists.
                 if (totalProduct == number && totalProduct != 0) {
@@ -81,7 +81,7 @@ public final class PackageLooper {
 
             // if multiple minimum pack number combination is found...
             if (minPackFreq > 1) {
-                Timber.d("MORE THAN 1 MINIMUM PACKAGE METHOD DETECTED.");
+                // Timber.d("MORE THAN 1 MINIMUM PACKAGE METHOD DETECTED.");
 
                 // get all occurrence of the index
                 ArrayList<Integer> indexList = new ArrayList<>();
@@ -101,7 +101,7 @@ public final class PackageLooper {
 
                     priceIndexMap.put(price, index);
 
-                    Timber.d("Price: " + price);
+                    // Timber.d("Price: " + price);
                 }
 
                 // find the index that corresponds to the lowest price
@@ -118,8 +118,6 @@ public final class PackageLooper {
     }
 
 
-
-
     //////////////////////////////////////////////////////////////
     // BLUEBERRY MUFFIN AND CROISSANT CALCULATIONS BELOW
     //////////////////////////////////////////////////////////////
@@ -128,61 +126,153 @@ public final class PackageLooper {
     // method for calculating order for blueberry muffins
     public static ArrayList<Integer> calculateBlueberry(int number) {
         // Define the pack size
-        Integer largePackSize = 8;
-        Integer mediumPackSize = 5;
-        Integer smallPackSize = 2;
+        int largePackSize = 8;
+        int mediumPackSize = 5;
+        int smallPackSize = 2;
 
-        // define the prices
-        Double smallPrice = 9.95;
-        Double mediumPrice = 16.95;
-        Double largePrice = 24.95;
 
-        return calculateCombinations(number, largePackSize, mediumPackSize, smallPackSize,
-                smallPrice, mediumPrice, largePrice);
+        return calculateCombinations(number, largePackSize, mediumPackSize, smallPackSize);
     }
 
     // method for calculating order for croissant
     public static ArrayList<Integer> calculateCroissant(int number) {
         // Define the pack size
-        Integer largePackSize = 9;
-        Integer mediumPackSize = 5;
-        Integer smallPackSize = 3;
+        int largePackSize = 9;
+        int mediumPackSize = 5;
+        int smallPackSize = 3;
 
-        // define the prices
-        Double smallPrice = 5.95;
-        Double mediumPrice = 9.95;
-        Double largePrice = 16.99;
 
-        return calculateCombinations(number, largePackSize, mediumPackSize, smallPackSize,
-                smallPrice, mediumPrice, largePrice);
+        return calculateCombinations(number, largePackSize, mediumPackSize, smallPackSize);
     }
 
     // function used to find all combination of packaging for blueberry and croissant
     private static ArrayList<Integer> calculateCombinations(int number,
-                                                      Integer largePackSize,
-                                                      Integer mediumPackSize,
-                                                      Integer smallPackSize,
-                                                      Double smallPrice,
-                                                      Double mediumPrice,
-                                                      Double largePrice) {
+                                              int largePackSize,
+                                              int mediumPackSize,
+                                              int smallPackSize) {
 
-        List<Integer> smallPackNo = new ArrayList<>();
-        List<Integer> mediumPackNo = new ArrayList<>();
-        List<Integer> largePackNo = new ArrayList<>();
-        List<Integer> totalPackNo = new ArrayList<>();
 
         // get all possible combinations
-        compileAllPossibleCombinations(number, largePackSize, mediumPackSize, smallPackSize, smallPackNo, mediumPackNo, largePackNo, totalPackNo);
+        ArrayList<Integer> combResult = compileAllPossibleCombinationsBestOptimized(number, smallPackSize, mediumPackSize, largePackSize);
 
-        ArrayList<Integer> finalPackage = new ArrayList<>();
 
-        // find combination with minimum number of packaging and the lowest price.
-        findMinimumPackageCombination(smallPrice, mediumPrice, largePrice, smallPackNo, mediumPackNo, largePackNo, totalPackNo, finalPackage);
-
-        return finalPackage;
+        return combResult;
+        //return finalPackage;
     }
 
+    private static int max(int i, int j) {
+        return (i > j) ? i : j;
+    }
+
+    private static int[] knackPackAlgorithm(int number, int smallPackSize, int mediumPackSize, int largePackSize) {
+        int W = number;
+        int wt[] = {smallPackSize, mediumPackSize, largePackSize};
+        int val[] = {1, 1, 1};
+        int n = val.length;
+
+
+        // dp[i] is going to store maximum value
+        // with knapsack capacity i.
+        int dp[] = new int[W + 1];
+
+        // wt = 3,5,9
+        // Fill dp[] using above recursive formula
+        for (int i = W; i <= W; i++) {
+            for (int j = 0; j < n; j++) {
+                if (wt[j] <= i) {
+                    dp[i] = max(dp[i], dp[i - wt[j]] +
+                            val[j]);
+                }
+            }
+        }
+        Timber.d("dp list");
+        for (int item : dp) {
+            Timber.d("dp: " + item);
+        }
+        return dp;
+    }
+
+
     // function for finding all possible combination to get the number of products requested.
+    private static ArrayList<Integer> compileAllPossibleCombinationsBestOptimized(int number, int smallPackSize, int mediumPackSize, int largePackSize) {
+        //int xlim = number/smallPackSize;
+        //int ylim = number/mediumPackSize;
+        int zlim = number / largePackSize;
+        boolean conditionMet = false;
+        ArrayList<Integer> combResult = new ArrayList<>();
+
+        // loop thru all possibility
+        for (int z = zlim; z >= 0; z--) {
+
+            int ylim = number - z * largePackSize;
+
+            for (int y = ylim; y >= 0; y--) {
+
+                int xlim = ylim - (y * mediumPackSize);
+
+                for (int x = xlim; x >= 0; x--) {
+                    int totalProduct = smallPackSize * x + mediumPackSize * y + largePackSize * z;
+
+                    // if total product number equals what we requested, save this combination.
+                    if (totalProduct == number && totalProduct != 0) {
+                        combResult.add(x);
+                        combResult.add(y);
+                        combResult.add(z);
+
+                        conditionMet = true;
+                        break;
+                    }
+
+                }
+                if (conditionMet) {
+                    break;
+                }
+            }
+            if (conditionMet) {
+                break;
+            }
+        }
+
+        return combResult;
+    }
+
+}
+
+
+
+    /*
+    private static void compileAllPossibleCombinationsOptimized(int number, int largePackSize, int mediumPackSize, int smallPackSize, List<Integer> smallPackNo, List<Integer> mediumPackNo, List<Integer> largePackNo, List<Integer> totalPackNo) {
+       //int xlim = number/smallPackSize;
+        //int ylim = number/mediumPackSize;
+        int zlim = number/largePackSize;
+
+        // loop thru all possibility
+        for (int z = zlim; z >= 0; z--) {
+
+            int ylim = number - z*largePackSize;
+
+            for (int y = ylim; y >= 0; y--) {
+
+                int xlim = ylim - (y*mediumPackSize);
+
+                for (int x = xlim; x >= 0; x--) {
+                    int totalProduct = smallPackSize*x + mediumPackSize*y + largePackSize*z;
+
+                    // if total product number equals what we requested, save this combination.
+                    if (totalProduct == number && totalProduct != 0) {
+                        smallPackNo.add(x);
+                        mediumPackNo.add(y);
+                        largePackNo.add(z);
+
+                        totalPackNo.add(x + y + z);
+                    }
+                }
+            }
+        }
+    }
+
+
+
     private static void compileAllPossibleCombinations(int number, int largePackSize, int mediumPackSize, int smallPackSize, List<Integer> smallPackNo, List<Integer> mediumPackNo, List<Integer> largePackNo, List<Integer> totalPackNo) {
         int xlim = number/smallPackSize;
         int ylim = number/mediumPackSize;
@@ -206,6 +296,8 @@ public final class PackageLooper {
             }
         }
     }
+
+
 
     // function to calculate the combination with the lowest number of packages and the lowest price
     private static void findMinimumPackageCombination(Double smallPrice, Double mediumPrice, Double largePrice, List<Integer> smallPackNo, List<Integer> mediumPackNo, List<Integer> largePackNo, List<Integer> totalPackNo, List<Integer> finalPackage) {
@@ -257,5 +349,6 @@ public final class PackageLooper {
         }
     }
 
+    */
 
-}
+//}
