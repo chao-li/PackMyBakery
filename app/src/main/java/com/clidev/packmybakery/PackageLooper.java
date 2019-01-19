@@ -15,38 +15,12 @@ public final class PackageLooper {
     //////////////////////////////////////////////////////////////
     // VEGEMITE SCROLLS CALCULATIONS BELOW
     //////////////////////////////////////////////////////////////
-    public static ArrayList<Integer> calculateVegemite(int number) {
+    public static ArrayList<Integer> optimalVegemite(int number) {
         // set the pack size
-        int mediumPackSize = 5;
-        int smallPackSize = 3;
-
-        // set the pricing
-        /*
-        Double smallPrice = 6.99;
-        Double mediumPrice = 8.99;
-        */
-
-        // create empty lists to house the collection of possible pack numbers.
-        /*
-        List<Integer> smallPackNo = new ArrayList<>();
-        List<Integer> mediumPackNo = new ArrayList<>();
-        List<Integer> totalPackNo = new ArrayList<>();
-        */
-
-        // run the function to fill the collection of combinations
-        ArrayList<Integer> combResult = compileAllPossibleCombinationsBestOptimizedVegemite(number, smallPackSize, mediumPackSize);
-
-        /*
-        ArrayList<Integer> finalPackage = new ArrayList<>();
-
-        // run the function to find the combination with the least number of packaging, and at the same time, ensuring the lowest cost.
-        findMinimumPackageCombinationVegemite(smallPrice, mediumPrice, smallPackNo, mediumPackNo, totalPackNo, finalPackage);
-
-        return finalPackage;
-        */
-        return combResult;
+        int[] packages = new int[]{3,5};
 
 
+        return knapSackImproved(number, packages);
     }
 
     private static ArrayList<Integer> compileAllPossibleCombinationsBestOptimizedVegemite(int number, int smallPackSize, int mediumPackSize) {
@@ -163,6 +137,89 @@ public final class PackageLooper {
     //////////////////////////////////////////////////////////////
 
 
+    public static ArrayList<Integer> optimalNumberBlueberry(int number) {
+        int[] packages = new int[]{2,5,8};
+
+        return knapSackImproved(number, packages);
+    }
+
+    public static ArrayList<Integer> optimalNumberCroissant(int number) {
+        int[] packages = new int[]{3,5,9};
+
+
+        return knapSackImproved(number, packages);
+    }
+
+
+
+
+    private static ArrayList<Integer> knapSackImproved(int number, int packages[]) {
+        // Create table that tracks minimum number of packages and the combination of packages
+        int T[] = new int[number + 1];
+        int R[] = new int[number + 1];
+
+        T[0] = 0;
+
+        // initialize the tables. Set T to a large number.
+        for (int i = 1; i <= number; i++) {
+            T[i] = Integer.MAX_VALUE - 1;
+            R[i] = -1;
+        }
+
+        // Loop through each package size
+        for (int j = 0; j < packages.length; j++) {
+            // loop from number of 1 to number.
+            for (int i = 1; i <= number; i++) {
+
+                // Document the minimum product number and combination.
+                if (i >= packages[j]) {
+                    if (T[i - packages[j]] + 1 < T[i]) {
+
+                        T[i] = 1 + T[i - packages[j]];
+                        R[i] = j;
+                    }
+                }
+            }
+        }
+
+        return getCombination(R, packages);
+    }
+
+    private static ArrayList<Integer> getCombination(int R[], int packages[]) {
+        ArrayList<Integer> combinations = new ArrayList<>();
+
+        // if it is still -1 in the last position, that mean no combination is possible
+        if (R[R.length - 1] == -1) {
+            return combinations;
+        }
+
+
+        int position = R.length - 1;
+
+        // collect a list of package combination
+        ArrayList<Integer> packageArray = new ArrayList<>();
+        while ( position != 0 ) {
+            int j = R[position];
+
+            packageArray.add(packages[j]);
+            position = position - packages[j];
+        }
+
+        // Find get the count of each package size
+        for (Integer pack : packages) {
+            int occurrences = Collections.frequency(packageArray, pack);
+            combinations.add(occurrences);
+        }
+
+
+        return combinations;
+    }
+}
+
+
+
+    /*
+
     // method for calculating order for blueberry muffins
     public static ArrayList<Integer> calculateBlueberry(int number) {
         // Define the pack size
@@ -187,22 +244,7 @@ public final class PackageLooper {
 
     }
 
-    public static ArrayList<Integer> optimalNumberBlueberry(int number) {
-        int[] packages = new int[]{2,5,8};
-
-        //return knapsackAlgorithm(packages, packages.length, number);
-        return knapSackImproved(number, packages);
-    }
-
-    public static ArrayList<Integer> optimalNumberCroissant(int number) {
-        int[] packages = new int[]{3,5,9};
-
-        //return knapsackAlgorithm(packages, packages.length, number);
-        return knapSackImproved(number, packages);
-    }
-
-
-    // function used to find all combination of packaging for blueberry and croissant
+     // function used to find all combination of packaging for blueberry and croissant
     private static ArrayList<Integer> calculateCombinations(int number,
                                               int largePackSize,
                                               int mediumPackSize,
@@ -217,10 +259,7 @@ public final class PackageLooper {
         //return finalPackage;
     }
 
-
-
-
-    // function for finding all possible combination to get the number of products requested.
+        // function for finding all possible combination to get the number of products requested.
     private static ArrayList<Integer> compileAllPossibleCombinationsBestOptimized(int number, int smallPackSize, int mediumPackSize, int largePackSize) {
 
 
@@ -263,106 +302,7 @@ public final class PackageLooper {
         return combResult;
     }
 
-    // knapsack algorithm
-    // noOfPackages is size of packages array
-    // (number of different packages)
-    private static int knapsackAlgorithm(int packages[], int noOfPackages, int number)
-    {
-        // record of minimum packages
-        int record[] = new int[number + 1];
 
-        // initialize record
-        record[0] = 0;
-
-        // All record start as infinite,
-        for (int n = 1; n <= number; n++)
-            record[n] = Integer.MAX_VALUE;
-
-        // iterate through the possible numbers, from 1 to number
-        for (int n = 1; n <= number; n++)
-        {
-            // look at small medium and large packages
-            for (int p = 0; p < noOfPackages; p++)
-                if (packages[p] <= n)
-                {
-                    int minPackPickPack_p = record[n - packages[p]];
-                    if (minPackPickPack_p != Integer.MAX_VALUE
-                            && minPackPickPack_p + 1 < record[n])
-                        record[n] = minPackPickPack_p + 1;
-                }
-
-        }
-        return record[number];
-
-    }
-
-
-
-    private static ArrayList<Integer> knapSackImproved(int total, int coins[]) {
-        int T[] = new int[total + 1];
-        int R[] = new int[total + 1];
-
-        T[0] = 0;
-
-        for (int i = 1; i <= total; i++) {
-            T[i] = Integer.MAX_VALUE - 1;
-            R[i] = -1;
-        }
-
-        for (int j = 0; j < coins.length; j++) {
-            for (int i = 1; i <= total; i++) {
-
-                if (i >= coins[j]) {
-                    if (T[i - coins[j]] + 1 < T[i]) {
-
-                        T[i] = 1 + T[i - coins[j]];
-                        R[i] = j;
-                    }
-                }
-            }
-        }
-
-
-
-        //return T[total];
-        return getCombination(R, coins);
-    }
-
-    private static ArrayList<Integer> getCombination(int R[], int coins[]) {
-        ArrayList<Integer> combinations = new ArrayList<>();
-
-        if (R[R.length - 1] == -1) {
-            Timber.d("No solution is possible");
-            return combinations;
-        }
-
-        int start = R.length - 1;
-        Timber.d("Coins used to form total ");
-
-
-        ArrayList<Integer> packageArray = new ArrayList<>();
-        while ( start != 0 ) {
-            int j = R[start];
-            Timber.d(coins[j] + " ");
-            packageArray.add(coins[j]);
-            start = start - coins[j];
-        }
-        Timber.d("\n");
-
-
-        for (Integer pack : coins) {
-            int occurrences = Collections.frequency(packageArray, pack);
-            combinations.add(occurrences);
-        }
-
-
-        return combinations;
-    }
-}
-
-
-
-    /*
     private static void compileAllPossibleCombinationsOptimized(int number, int largePackSize, int mediumPackSize, int smallPackSize, List<Integer> smallPackNo, List<Integer> mediumPackNo, List<Integer> largePackNo, List<Integer> totalPackNo) {
        //int xlim = number/smallPackSize;
         //int ylim = number/mediumPackSize;

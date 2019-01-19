@@ -1,8 +1,6 @@
 package com.clidev.packmybakery;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,16 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         protected ArrayList<ArrayList<Integer>> doInBackground(Void... voids) {
 
             // Call the PackageLooper class to perform calculations for the best package combinations
-            ArrayList<Integer> vegemitePackage = PackageLooper.calculateVegemite(mVegemiteNumber);
+            ArrayList<Integer> vegemitePackage = PackageLooper.optimalVegemite(mVegemiteNumber);
             //ArrayList<Integer> blueberryPackage = PackageLooper.calculateBlueberry(mBlueberryNumber);
             //ArrayList<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
 
