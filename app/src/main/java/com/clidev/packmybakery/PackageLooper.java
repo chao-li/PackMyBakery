@@ -3,6 +3,7 @@ package com.clidev.packmybakery;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -183,18 +184,21 @@ public final class PackageLooper {
 
 
         return calculateCombinations(number, largePackSize, mediumPackSize, smallPackSize);
+
     }
 
-    public static int optimalNumberBlueberry(int number) {
+    public static ArrayList<Integer> optimalNumberBlueberry(int number) {
         int[] packages = new int[]{2,5,8};
 
-        return knapsackAlgorithm(packages, packages.length, number);
+        //return knapsackAlgorithm(packages, packages.length, number);
+        return knapSackImproved(number, packages);
     }
 
-    public static int optimalNumberCroissant(int number) {
+    public static ArrayList<Integer> optimalNumberCroissant(int number) {
         int[] packages = new int[]{3,5,9};
 
-        return knapsackAlgorithm(packages, packages.length, number);
+        //return knapsackAlgorithm(packages, packages.length, number);
+        return knapSackImproved(number, packages);
     }
 
 
@@ -281,10 +285,10 @@ public final class PackageLooper {
             for (int p = 0; p < noOfPackages; p++)
                 if (packages[p] <= n)
                 {
-                    int currentRecord = record[n - packages[p]];
-                    if (currentRecord != Integer.MAX_VALUE
-                            && currentRecord + 1 < record[n])
-                        record[n] = currentRecord + 1;
+                    int minPackPickPack_p = record[n - packages[p]];
+                    if (minPackPickPack_p != Integer.MAX_VALUE
+                            && minPackPickPack_p + 1 < record[n])
+                        record[n] = minPackPickPack_p + 1;
                 }
 
         }
@@ -292,6 +296,68 @@ public final class PackageLooper {
 
     }
 
+
+
+    private static ArrayList<Integer> knapSackImproved(int total, int coins[]) {
+        int T[] = new int[total + 1];
+        int R[] = new int[total + 1];
+
+        T[0] = 0;
+
+        for (int i = 1; i <= total; i++) {
+            T[i] = Integer.MAX_VALUE - 1;
+            R[i] = -1;
+        }
+
+        for (int j = 0; j < coins.length; j++) {
+            for (int i = 1; i <= total; i++) {
+
+                if (i >= coins[j]) {
+                    if (T[i - coins[j]] + 1 < T[i]) {
+
+                        T[i] = 1 + T[i - coins[j]];
+                        R[i] = j;
+                    }
+                }
+            }
+        }
+
+
+
+        //return T[total];
+        return getCombination(R, coins);
+    }
+
+    private static ArrayList<Integer> getCombination(int R[], int coins[]) {
+        ArrayList<Integer> combinations = new ArrayList<>();
+
+        if (R[R.length - 1] == -1) {
+            Timber.d("No solution is possible");
+            return combinations;
+        }
+
+        int start = R.length - 1;
+        Timber.d("Coins used to form total ");
+
+
+        ArrayList<Integer> packageArray = new ArrayList<>();
+        while ( start != 0 ) {
+            int j = R[start];
+            Timber.d(coins[j] + " ");
+            packageArray.add(coins[j]);
+            start = start - coins[j];
+        }
+        Timber.d("\n");
+
+
+        for (Integer pack : coins) {
+            int occurrences = Collections.frequency(packageArray, pack);
+            combinations.add(occurrences);
+        }
+
+
+        return combinations;
+    }
 }
 
 

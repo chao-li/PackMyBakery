@@ -98,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
 
             // Call the PackageLooper class to perform calculations for the best package combinations
             ArrayList<Integer> vegemitePackage = PackageLooper.calculateVegemite(mVegemiteNumber);
-            ArrayList<Integer> blueberryPackage = PackageLooper.calculateBlueberry(mBlueberryNumber);
-            ArrayList<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
+            //ArrayList<Integer> blueberryPackage = PackageLooper.calculateBlueberry(mBlueberryNumber);
+            //ArrayList<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
 
             // testing knapsack algorithm
-            Timber.d("blueberry optimal: " + PackageLooper.optimalNumberBlueberry(mBlueberryNumber));
-            Timber.d("croissant optimal: " + PackageLooper.optimalNumberCroissant(mCroissantNumber));
+            ArrayList<Integer> blueberryPackage = PackageLooper.optimalNumberBlueberry(mBlueberryNumber);
+            ArrayList<Integer> croissantPackage = PackageLooper.optimalNumberCroissant(mCroissantNumber);
 
 
 
