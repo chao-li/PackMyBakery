@@ -173,6 +173,7 @@ public final class PackageLooper {
         return calculateCombinations(number, largePackSize, mediumPackSize, smallPackSize);
     }
 
+
     // method for calculating order for croissant
     public static ArrayList<Integer> calculateCroissant(int number) {
         // Define the pack size
@@ -183,6 +184,19 @@ public final class PackageLooper {
 
         return calculateCombinations(number, largePackSize, mediumPackSize, smallPackSize);
     }
+
+    public static int optimalNumberBlueberry(int number) {
+        int[] packages = new int[]{2,5,8};
+
+        return knapsackAlgorithm(packages, packages.length, number);
+    }
+
+    public static int optimalNumberCroissant(int number) {
+        int[] packages = new int[]{3,5,9};
+
+        return knapsackAlgorithm(packages, packages.length, number);
+    }
+
 
     // function used to find all combination of packaging for blueberry and croissant
     private static ArrayList<Integer> calculateCombinations(int number,
@@ -199,37 +213,7 @@ public final class PackageLooper {
         //return finalPackage;
     }
 
-    private static int max(int i, int j) {
-        return (i > j) ? i : j;
-    }
 
-    private static int[] knackPackAlgorithm(int number, int smallPackSize, int mediumPackSize, int largePackSize) {
-        int W = number;
-        int wt[] = {smallPackSize, mediumPackSize, largePackSize};
-        int val[] = {1, 1, 1};
-        int n = val.length;
-
-
-        // dp[i] is going to store maximum value
-        // with knapsack capacity i.
-        int dp[] = new int[W + 1];
-
-        // wt = 3,5,9
-        // Fill dp[] using above recursive formula
-        for (int i = W; i <= W; i++) {
-            for (int j = 0; j < n; j++) {
-                if (wt[j] <= i) {
-                    dp[i] = max(dp[i], dp[i - wt[j]] +
-                            val[j]);
-                }
-            }
-        }
-        Timber.d("dp list");
-        for (int item : dp) {
-            Timber.d("dp: " + item);
-        }
-        return dp;
-    }
 
 
     // function for finding all possible combination to get the number of products requested.
@@ -273,6 +257,39 @@ public final class PackageLooper {
         }
 
         return combResult;
+    }
+
+    // knapsack algorithm
+    // noOfPackages is size of packages array
+    // (number of different packages)
+    private static int knapsackAlgorithm(int packages[], int noOfPackages, int number)
+    {
+        // record of minimum packages
+        int record[] = new int[number + 1];
+
+        // initialize record
+        record[0] = 0;
+
+        // All record start as infinite,
+        for (int n = 1; n <= number; n++)
+            record[n] = Integer.MAX_VALUE;
+
+        // iterate through the possible numbers, from 1 to number
+        for (int n = 1; n <= number; n++)
+        {
+            // look at small medium and large packages
+            for (int p = 0; p < noOfPackages; p++)
+                if (packages[p] <= n)
+                {
+                    int currentRecord = record[n - packages[p]];
+                    if (currentRecord != Integer.MAX_VALUE
+                            && currentRecord + 1 < record[n])
+                        record[n] = currentRecord + 1;
+                }
+
+        }
+        return record[number];
+
     }
 
 }

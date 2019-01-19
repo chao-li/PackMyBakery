@@ -101,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Integer> blueberryPackage = PackageLooper.calculateBlueberry(mBlueberryNumber);
             ArrayList<Integer> croissantPackage = PackageLooper.calculateCroissant(mCroissantNumber);
 
+            // testing knapsack algorithm
+            Timber.d("blueberry optimal: " + PackageLooper.optimalNumberBlueberry(mBlueberryNumber));
+            Timber.d("croissant optimal: " + PackageLooper.optimalNumberCroissant(mCroissantNumber));
+
 
 
             // package these results together so that they may all be returned to the main thread.
