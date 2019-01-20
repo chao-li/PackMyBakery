@@ -23,6 +23,95 @@ public final class PackageLooper {
         return knapSackImproved(number, packages);
     }
 
+
+    //////////////////////////////////////////////////////////////
+    // BLUEBERRY MUFFIN AND CROISSANT CALCULATIONS BELOW
+    //////////////////////////////////////////////////////////////
+
+
+    public static ArrayList<Integer> optimalNumberBlueberry(int number) {
+        int[] packages = new int[]{2,5,8};
+
+        return knapSackImproved(number, packages);
+    }
+
+    public static ArrayList<Integer> optimalNumberCroissant(int number) {
+        int[] packages = new int[]{3,5,9};
+
+
+        return knapSackImproved(number, packages);
+    }
+
+
+
+
+    private static ArrayList<Integer> knapSackImproved(int number, int packages[]) {
+        // Create table that tracks minimum number of packages and the combination of packages
+        int T[] = new int[number + 1];
+        int R[] = new int[number + 1];
+
+        T[0] = 0;
+
+        // initialize the tables. Set T to a large number.
+        for (int i = 1; i <= number; i++) {
+            T[i] = Integer.MAX_VALUE - 1;
+            R[i] = -1;
+        }
+
+        // Loop through each package size
+        for (int j = 0; j < packages.length; j++) {
+            // loop from number of 1 to number.
+            for (int i = 1; i <= number; i++) {
+
+                // Document the minimum product number and combination.
+                if (i >= packages[j]) {
+                    if (T[i - packages[j]] + 1 < T[i]) {
+
+                        T[i] = 1 + T[i - packages[j]];
+                        R[i] = j;
+                    }
+                }
+            }
+        }
+
+        return getCombination(R, packages);
+    }
+
+    private static ArrayList<Integer> getCombination(int R[], int packages[]) {
+        ArrayList<Integer> combinations = new ArrayList<>();
+
+        // if it is still -1 in the last position, that mean no combination is possible
+        if (R[R.length - 1] == -1) {
+            return combinations;
+        }
+
+
+        int position = R.length - 1;
+
+        // collect a list of package combination
+        ArrayList<Integer> packageArray = new ArrayList<>();
+        while ( position != 0 ) {
+            int j = R[position];
+
+            packageArray.add(packages[j]);
+            position = position - packages[j];
+        }
+
+        // Find get the count of each package size
+        for (Integer pack : packages) {
+            int occurrences = Collections.frequency(packageArray, pack);
+            combinations.add(occurrences);
+        }
+
+
+        return combinations;
+    }
+}
+
+
+
+    /*
+
     private static ArrayList<Integer> compileAllPossibleCombinationsBestOptimizedVegemite(int number, int smallPackSize, int mediumPackSize) {
 
         int ylim = number / mediumPackSize;
@@ -130,95 +219,7 @@ public final class PackageLooper {
             finalPackage.add(mediumPackNo.get(minIndex));
         }
     }
-    */
 
-    //////////////////////////////////////////////////////////////
-    // BLUEBERRY MUFFIN AND CROISSANT CALCULATIONS BELOW
-    //////////////////////////////////////////////////////////////
-
-
-    public static ArrayList<Integer> optimalNumberBlueberry(int number) {
-        int[] packages = new int[]{2,5,8};
-
-        return knapSackImproved(number, packages);
-    }
-
-    public static ArrayList<Integer> optimalNumberCroissant(int number) {
-        int[] packages = new int[]{3,5,9};
-
-
-        return knapSackImproved(number, packages);
-    }
-
-
-
-
-    private static ArrayList<Integer> knapSackImproved(int number, int packages[]) {
-        // Create table that tracks minimum number of packages and the combination of packages
-        int T[] = new int[number + 1];
-        int R[] = new int[number + 1];
-
-        T[0] = 0;
-
-        // initialize the tables. Set T to a large number.
-        for (int i = 1; i <= number; i++) {
-            T[i] = Integer.MAX_VALUE - 1;
-            R[i] = -1;
-        }
-
-        // Loop through each package size
-        for (int j = 0; j < packages.length; j++) {
-            // loop from number of 1 to number.
-            for (int i = 1; i <= number; i++) {
-
-                // Document the minimum product number and combination.
-                if (i >= packages[j]) {
-                    if (T[i - packages[j]] + 1 < T[i]) {
-
-                        T[i] = 1 + T[i - packages[j]];
-                        R[i] = j;
-                    }
-                }
-            }
-        }
-
-        return getCombination(R, packages);
-    }
-
-    private static ArrayList<Integer> getCombination(int R[], int packages[]) {
-        ArrayList<Integer> combinations = new ArrayList<>();
-
-        // if it is still -1 in the last position, that mean no combination is possible
-        if (R[R.length - 1] == -1) {
-            return combinations;
-        }
-
-
-        int position = R.length - 1;
-
-        // collect a list of package combination
-        ArrayList<Integer> packageArray = new ArrayList<>();
-        while ( position != 0 ) {
-            int j = R[position];
-
-            packageArray.add(packages[j]);
-            position = position - packages[j];
-        }
-
-        // Find get the count of each package size
-        for (Integer pack : packages) {
-            int occurrences = Collections.frequency(packageArray, pack);
-            combinations.add(occurrences);
-        }
-
-
-        return combinations;
-    }
-}
-
-
-
-    /*
 
     // method for calculating order for blueberry muffins
     public static ArrayList<Integer> calculateBlueberry(int number) {

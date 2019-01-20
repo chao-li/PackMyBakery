@@ -101,7 +101,8 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/vegemite_scroll_cv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/vegemite_scroll_cv" />
+        app:layout_constraintTop_toTopOf="@+id/vegemite_scroll_cv"
+        android:maxLength="7"/>
 
     <EditText
         android:id="@+id/blueberry_muffin_et"
@@ -114,7 +115,8 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/blueberry_muffin_cv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/blueberry_muffin_cv" />
+        app:layout_constraintTop_toTopOf="@+id/blueberry_muffin_cv"
+        android:maxLength="7"/>
 
     <EditText
         android:id="@+id/croissant_et"
@@ -127,7 +129,8 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/croissant_cv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/croissant_cv" />
+        app:layout_constraintTop_toTopOf="@+id/croissant_cv"
+        android:maxLength="7"/>
 
     <Button
         android:id="@+id/place_order_button"
